@@ -1,0 +1,13 @@
+.tech_admin {
+  text-align:center;
+  top:50%;
+  font-size:72px;
+  color: #fff;
+  text-shadow:  1px  1px 0 #D00,     2px  2px 0 #D00,     3px  3px 0 #D00,     4px  4px 0 #D00,    5px   5px 0 #D00,
+                6px  6px 0 #FE6230,  7px  7px 0 #FE6230,  8px  8px 0 #FE6230,  9px  9px 0 #FE6230, 10px 10px 0 #FE6230,
+               11px 11px 0 #FEF600, 12px 12px 0 #FEF600, 13px 13px 0 #FEF600, 14px 14px 0 #FEF600, 15px 15px 0 #FEF600,
+               16px 16px 0 #00BC00, 17px 17px 0 #00BC00, 18px 18px 0 #00BC00, 19px 19px 0 #00BC00, 20px 20px 0 #00BC00,
+               21px 21px 0 #009BFE, 22px 22px 0 #009BFE, 23px 23px 0 #009BFE, 24px 24px 0 #009BFE, 25px 25px 0 #009BFE,
+               26px 26px 0 #000083, 27px 27px 0 #000083, 28px 28px 0 #000083, 29px 29px 0 #000083, 30px 30px 0 #000083,
+               31px 31px 0 #30009B, 32px 32px 0 #30009B, 33px 33px 0 #30009B, 34px 34px 0 #30009B, 35px 35px 0 #30009B;
+}

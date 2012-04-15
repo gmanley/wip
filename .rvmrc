@@ -1,0 +1,5 @@
+rvm 1.9.3@wip --create
+if ! command -v bundle >/dev/null 2>&1 ; then
+  echo "Installing bundler gem"
+  gem install bundler
+fi
