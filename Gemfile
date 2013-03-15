@@ -1,5 +1,9 @@
 source :rubygems
 
+gem 'pry'
+gem 'pry-doc'
+gem 'activesupport'
+
 group :ipgallery_export do
   gem 'dm-core'
   gem 'dm-mysql-adapter'
@@ -12,12 +16,9 @@ group :imgur_dl do
   gem 'typhoeus'
 end
 
-group :renamer do
-  gem 'unicode_utils'
-end
-
 group :media_scanner do
   gem 'mediainfo', path: '/Users/Gray/projects/mediainfo'
+  gem 'unicode_scanner'
 end
 
 group :lister_pro_parser do

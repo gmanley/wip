@@ -1,5 +1,5 @@
 require 'bundler/setup'
-Bundler.require(:ipgallery_export)
+Bundler.require(:default, :ipgallery_export)
 
 require 'fileutils'
 require 'pathname'

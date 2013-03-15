@@ -1,5 +1,5 @@
 require 'bundler/setup'
-Bundler.require(:stat_test)
+Bundler.require(:default, :stat_test)
 
 def ci_lower_bound(pos, n, confidence)
   return 0 if n == 0

@@ -37,7 +37,7 @@ module MediaManager
     # Calculates a hash for the video using a portion of the file,
     # because large videos take forever to scan. (Taken from https://github.com/mistydemeo/metadater)
     def find_heuristic_hash
-      if File.size?(path) < 6291456  # File is too small to seek to 5MB, so hash the whole thing
+      if File.size(path) < 6291456  # File is too small to seek to 5MB, so hash the whole thing
         self.file_hash = Digest::MD5.hexdigest(IO.binread(path))
       else
         self.file_hash = Digest::MD5.hexdigest(File.open(path, 'rb') { |f| f.seek 5242880; f.read 1048576 })

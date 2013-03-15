@@ -1,5 +1,5 @@
 require 'bundler/setup'
-Bundler.require(:media_scanner)
+Bundler.require(:default, :media_scanner)
 require 'digest/sha1'
 require 'pathname'
 

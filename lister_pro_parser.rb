@@ -1,5 +1,5 @@
 require 'bundler/setup'
-Bundler.require(:lister_pro_parser)
+Bundler.require(:default, :lister_pro_parser)
 
 year = /(?<year>(20)?(07|08|09|10|11|12))/
 month = /(?<month>0[1-9]|1[012])/

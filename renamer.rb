@@ -1,26 +1,28 @@
 # encoding: UTF-8
 require 'bundler/setup'
-Bundler.require(:renamer)
+Bundler.require(:default)
 
 require 'date'
 require 'fileutils'
 require 'find'
 require 'pathname'
+require 'active_support/core_ext/string'
 
 VIDEO_EXTENSIONS = ['.3gp', '.asf', '.asx', '.avi', '.flv', '.iso', '.m2t', '.m2ts', '.m2v', '.m4v',
                     '.mkv', '.mov', '.mp4', '.mpeg', '.mpg', '.mts', '.ts', '.tp', '.trp', '.vob', '.wmv', '.swf']
 
 # NUMERAL_DATE_REGEX = /((20)?(07|08|09|10|11|12))(\.|\-|\/)?(0[1-9]|1[012])(\.|\-|\/)?(0[1-9]|[12][0-9]|3[01])/
 
-year = /(?<year>(20)?(07|08|09|10|11|12))/
+year = /(?<year>(20)?(07|08|09|10|11|12|13))/
 month = /(?<month>0[1-9]|1[012])/
 day = /(?<day>0[1-9]|\.[1-9]|[12][0-9]|3[01])/
 NUMERAL_DATE_REGEX = /#{year}(?<separator>\.|\-|\/)?#{month}(\k<separator>)?#{day}/
 
 HANGUL_DATE_TO_NUMERAL = {
   'year' => {
-    '이천십일년' => '2011',
-    '이천십이년' => '2012'
+    '이천십일년' => '11',
+    '이천십이년' => '12',
+    '이천십삼년' => '13'
   },
 
   'month' => {
@@ -39,15 +41,15 @@ HANGUL_DATE_TO_NUMERAL = {
   },
 
   'day' => {
-    '일일'   => '1',
-    '이일'   => '2',
-    '삼일'   => '3',
-    '사일'   => '4',
-    '오일'   => '5',
-    '육일'   => '6',
-    '칠일'   => '7',
-    '팔일'   => '8',
-    '구일'   => '9',
+    '일일'   => '01',
+    '이일'   => '02',
+    '삼일'   => '03',
+    '사일'   => '04',
+    '오일'   => '05',
+    '육일'   => '06',
+    '칠일'   => '07',
+    '팔일'   => '08',
+    '구일'   => '09',
     '십일'   => '10',
     '십일일'  => '11',
     '십이일'  => '12',
@@ -134,9 +136,9 @@ class VideoParser
 
       @original_date =  hangul_date_match.to_s
       @air_date = [
-        HANGUL_DATE_TO_NUMERAL['year'][hangul_year],
-        HANGUL_DATE_TO_NUMERAL['month'][hangul_month],
-        HANGUL_DATE_TO_NUMERAL['day'][hangul_day]
+        (HANGUL_DATE_TO_NUMERAL['year'][hangul_year] || hangul_year),
+        (HANGUL_DATE_TO_NUMERAL['month'][hangul_month] || hangul_month),
+        (HANGUL_DATE_TO_NUMERAL['day'][hangul_day] || hangul_day)
       ].join('.')
     end
   rescue Exception => e
@@ -148,7 +150,7 @@ class VideoParser
   # end
 end
 
-path = '/Volumes/G-Raid/Videos'
+path = '/Volumes/NAS/Videos'
 video_files = Find.find(path).find_all {|p| FileTest.file?(p) && VIDEO_EXTENSIONS.include?(File.extname(p).downcase)}
 @renames = 0
 video_files.each do |f|
@@ -158,7 +160,11 @@ video_files.each do |f|
     unless parsed_video.file_name.match(/^\[\d\d\.\d\d\.\d\d\]/)
       puts "---------------------------------------"
       puts "Renaming \"#{File.basename(f)}\" to \"#{new_file_name}\""
-      FileTools.safe_move(f, File.join(File.dirname(f), new_file_name))
+      begin
+        FileTools.safe_move(f, File.join(File.dirname(f), new_file_name))
+      rescue => e
+       "Skipping \"#{File.basename(f)}\" #{e.message}"
+      end
       # puts "FileTools.safe_move(\"#{f}\", File.join(\"#{File.dirname(f)}\", \"#{new_file_name}\"))"
       puts "---------------------------------------"
       @renames += 1

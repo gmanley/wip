@@ -1,0 +1,17 @@
+pg_dump -Fc soshigal_production > soshigal_production.dump
+pg_restore -O -x -c -d soshigal_development ~/Desktop/soshigal_production.dump
+
+
+
+# Add force: true to create table
+load 'db/migrate/20121106052004_devise_create_users.rb'
+DeviseCreateUsers.new.change
+
+rake db:seed
+users = User.all
+Comment.all.each do |c|
+  c.user_id = users.sample.id
+  c.save
+end
+
+

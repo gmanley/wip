@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 require 'bundler/setup'
-Bundler.require(:imgur_dl)
+Bundler.require(:default, :imgur_dl)
 
 # https://gist.github.com/1866389
 # requires ruby 1.9.3 and up
@@ -19,10 +19,12 @@ module Imgur
     def start
       hydra = Typhoeus::Hydra.new
       album_request = Typhoeus::Request.new(@album_uri)
+
       album_request.on_complete do |response|
         doc = Nokogiri::HTML(response.body)
-        album_download_folder = "#{Dir.pwd}/downloads/#{@album_uri.split('/').last}"
+        album_download_folder = "#{Dir.pwd}/downloads/#{File.basename(@album_uri)}"
         FileUtils.mkdir_p(album_download_folder)
+
         urls = doc.css('.image-hover.download a')
         img_count = 1
         img_total = urls.count
