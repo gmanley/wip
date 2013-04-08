@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-$:.unshift(File.expand_path('../../lib', __FILE__))
-
-require 'renamer'
-
-DRY_RUN = true
-renamer = VideoScanner.new('/Volumes/NAS/Torrents/Completed')
-renamer.rename!
